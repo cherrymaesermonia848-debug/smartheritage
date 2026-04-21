@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 21, 2026 at 08:27 AM
+-- Generation Time: Apr 21, 2026 at 03:48 PM
 -- Server version: 12.2.2-MariaDB
 -- PHP Version: 8.5.5
 
@@ -31,8 +31,8 @@ CREATE TABLE `locations` (
   `id` int(30) NOT NULL,
   `type` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `lat` int(100) NOT NULL,
-  `lng` int(100) NOT NULL,
+  `lat` double NOT NULL,
+  `lng` double NOT NULL,
   `description` varchar(100) NOT NULL,
   `history` varchar(100) NOT NULL,
   `contact` varchar(100) DEFAULT NULL,
