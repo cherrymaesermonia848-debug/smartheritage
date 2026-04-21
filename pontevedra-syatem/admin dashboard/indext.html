@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartHeritage Dashboard</title>
+
+<script>
+if(localStorage.getItem("isLoggedIn") !== "true"){
+  window.location.href = "login.html";
+}
+</script>
+
+<link rel="stylesheet" href="styles.css">
+<!-- ✅ CHART -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- ✅ LEAFLET (MAP) -->
+<!-- LEAFLET -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css">
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+<h2>SmartHeritage</h2>
+<p>Admin Panel</p>
+
+<a onclick="showSection('dashboard')" class="active">Dashboard</a>
+<a onclick="showSection('tourist')">Tourist Spots</a>
+<a onclick="showSection('map')">Map Locations</a>
+<a onclick="showSection('gallery')">Gallery</a>
+<a onclick="showSection('users')">Users</a>
+<a onclick="showSection('reports')">Reports</a>
+<a onclick="showSection('settings')">Settings</a>
+
+<button class="logout">Logout</button>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="section">
+  <h1>Admin Dashboard</h1>
+
+  <div class="cards">
+    <div class="card green">
+      <span id="totalSpots">10</span>
+      <span>Total Tourist Spots</span>
+    </div>
+    <div class="card orange">20<span>Total Resorts</span></div>
+    <div class="card purple">5<span>Heritage Sites</span></div>
+    <div class="card blue">0<span>Total Users</span></div>
+       <div class="card blue">21<span>Barangay</span></div>
+  </div>
+</div>
+
+<!-- TOURIST -->
+<div id="tourist" class="section" style="display:none;">
+  <h3>Tourist Spot Management</h3>
+  <table id="table">
+    <tr>
+      <th>Name</th>
+      <th>Barangay</th>
+      <th>Lat</th>
+      <th>Lng</th>
+      <th>Action</th>
+    </tr>
+  </table>
+<button id="addBtn">Click Map to Add Location</button>
+</div>
+
+<!-- ✅ FIXED MAP SECTION -->
+<div id="map" class="section" style="display:none;">
+  <h2>Map Locations</h2>
+ <div id="mapContainer" style="height:500px;"></div>
+</div>
+
+
+<!-- GALLERY -->
+<div id="gallery" class="section" style="display:none;">
+  <h2>Gallery</h2>
+  <div id="galleryContainer" class="gallery-grid"></div>
+</div>
+
+
+<!-- USERS -->
+<div id="users" class="section" style="display:none;">
+  <h1>Users Page</h1>
+
+  <!-- STATS -->
+  <div class="user-cards">
+    <div class="user-card blue">220<br><span>Total Users</span></div>
+    <div class="user-card green">198<br><span>Active Users</span></div>
+    <div class="user-card orange">22<br><span>Disabled</span></div>
+    <div class="user-card purple">12<br><span>Admins</span></div>
+  </div>
+
+  <!-- TOP BAR -->
+  <div class="user-top">
+    <input type="text" id="searchUser" placeholder="Search users...">
+    <button onclick="addUser()">+ Add User</button>
+  </div>
+
+  <!-- TABLE -->
+  <table id="userTable">
+    <tr>
+     <th>#</th>
+<th>Name</th>
+<th>Email</th>
+<th>Role</th>
+<th>Status</th>
+<th>Joined</th>
+<th>Action</th>
+    </tr>
+  </table>
+</div>
+
+<!-- REPORT -->
+<div id="reports" class="section" style="display:none;">
+  <h2>📊 Reports Dashboard</h2>
+<h3>📍 Tourist Spots per Barangay</h3>
+<canvas id="barangayChart" style="max-width:400px;"></canvas>
+
+</div>
+</main>
+</div>
+
+<!-- LOGOUT -->
+<script>
+function logout(){
+  localStorage.removeItem("isLoggedIn");
+  window.location.replace("login.html");
+}
+</script>
+
+<script src="script.js"></script>
+<!-- GALLERY -->
+<div id="imageModal" class="modal">
+  <span class="close" onclick="closePreview()">&times;</span>
+  <img id="modalImg">
+
+
+</div>
