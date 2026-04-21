@@ -71,7 +71,7 @@
                             <option value="resort">Resort</option>
                             <option value="heritage">Heritage</option>
                             <option value="tourist">Tourist Spot</option>
-                             <option value="cafe">cafe</option>
+                            <option value="cafe">Cafe</option>
                         </select>
 
                         <select id="searchSelect">
@@ -171,12 +171,16 @@
     <h2>📩 Request</h2>
 
     <div class="card">
-        <input type="text" placeholder="Your Name">
-        <input type="text" placeholder="Request Type">
-        <textarea placeholder="Details"></textarea>
-        <button>Submit Request</button>
+        <form action="request.php" method="POST">
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+            <input type="text" id="request" name="request" placeholder="Request Type" required>
+            <textarea id="requestDetails" name="requestDetails" placeholder="Details"></textarea>
+            <button>Submit Request</button>
+        </form>
     </div>
 </div>
+
+
 
 <!-- DOCUMENTS -->
 <div id="documents" class="section">
