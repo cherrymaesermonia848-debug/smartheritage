@@ -10,7 +10,7 @@ if (!in_array($method, ['GET', 'POST'], true)) {
     exit;
 }
 
-$sql = 'SELECT id, type, name, barangay, lat, lng, description, history, contact, email, fb, website, rate, cottage, image FROM `locations` ORDER BY name ASC';
+$sql = 'SELECT id, type, name, barangay, lat, lng, description, history, contact, email, fb, website, rate, cottage, image, share_link FROM `locations` ORDER BY name ASC';
 $result = $conn->query($sql);
 
 if (!$result) {

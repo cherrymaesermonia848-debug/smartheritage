@@ -5,7 +5,6 @@ function toggleMenu() {
 
 let map;
 let marker;
- 
 
 let places = {};
 
@@ -33,9 +32,6 @@ function normalizePlaces(data) {
     return {};
 }
 
-let map;
-let userLocation = null;
-
 function loadPlaces() {
     return fetch("./retrieve.php", { cache: "no-store" })
         .then(res => res.json())
@@ -61,7 +57,7 @@ function createPopup(place){
                 DETAILS
             </button>
 
-            <button data-action="navigate" data-lat="${place.lat}" data-lng="${place.lng}"
+            <button data-action="navigate" data-link="${place.share_link || ""}"
                 style="padding:5px 10px; margin:5px; background:blue; color:white; border:none; border-radius:5px;">
                 NAVIGATE
             </button>
@@ -94,12 +90,12 @@ function initMap() {
         const navBtn = popupEl.querySelector("[data-action='navigate']");
         if (navBtn) {
             navBtn.addEventListener("click", function () {
-                const lat = Number(this.dataset.lat);
-                const lng = Number(this.dataset.lng);
-                navigateTo(lat, lng);
+                    const link = this.dataset.link || "";
+                    navigateTo(link);
             });
         }
     });
+
 }
 
 // TYPE → SEARCH UPDATE
@@ -218,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .bindPopup(`
                     <div style="text-align:center;">
                         <h4>${name}</h4>
-                        <button onclick="navigateTo(${lat}, ${lon})"
+                            <button onclick="navigateTo('')"
                             style="padding:5px 10px; margin:5px; background:blue; color:white; border:none; border-radius:5px;">
                             NAVIGATE
                         </button>
@@ -326,60 +322,15 @@ function viewDetails(id){
 }
 
 
-function navigateTo(lat, lng){
-    window.open(`https://www.google.com/maps?q=${lat},${lng}`, "_blank");
-}
-
-// GET USER LOCATION
-    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(pos=>{
-            const lat = pos.coords.latitude;
-            const lng = pos.coords.longitude;
-
-            userLocation = [lat,lng];
-
-            L.marker([lat,lng])
-                .addTo(map)
-                .bindPopup("📍 You are here")
-                .openPopup();
-
-            map.setView([lat,lng],14);
-
-        },()=>{
-            alert("Allow location access!");
-        });
-    }
-
- places.forEach(place=>{
-        L.marker([place.lat, place.lng])
-            .addTo(map)
-            .bindPopup(`
-                <b>${place.name}</b><br><br>
-                <button onclick="navigateTo(${place.lat}, ${place.lng})">
-                    NAVIGATE
-                </button>
-            `);
-             });
 // 🔥 GOOGLE MAPS NAVIGATION
-function navigateTo(lat, lng){
-
-    if(!userLocation){
-        alert("Location not ready!");
+function navigateTo(shareLink) {
+    const url = (shareLink || "").trim();
+    if (!url) {
+        alert("No share link available for this location.");
         return;
     }
-
-    const userLat = userLocation[0];
-    const userLng = userLocation[1];
-
-    // GOOGLE MAPS DIRECTIONS
-    const url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}&travelmode=driving`;
-
     window.open(url, "_blank");
 }
-
-// START
-window.onload = initMap;
-
 
 // SIDEBAR FUNCTION
 function openSection(event, sectionName) {

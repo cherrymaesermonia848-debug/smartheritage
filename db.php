@@ -2,8 +2,8 @@
 mysqli_report(MYSQLI_REPORT_OFF);
 
 $DB_HOST = getenv('DB_HOST') ?: 'localhost';
-$DB_USER = getenv('DB_USER') ?: 'root';
-$DB_PASSWORD = getenv('DB_PASSWORD') ?: '';
+$DB_USER = getenv('DB_USER') ?: 'cordystackx';
+$DB_PASSWORD = getenv('DB_PASSWORD') ?: 'uvp65200';
 $DB_NAME = getenv('DB_NAME') ?: 'smart_heritage';
 
 $conn = @new mysqli($DB_HOST, $DB_USER, $DB_PASSWORD);
